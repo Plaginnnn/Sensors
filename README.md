@@ -1,2 +1,0 @@
-# Sensors
-Sensor software project
