@@ -1,4 +1,3 @@
-import React from 'react'
 import './App.css'
 import LineGraph from './components/graphics/LineGraph'
 export const App = () => {
