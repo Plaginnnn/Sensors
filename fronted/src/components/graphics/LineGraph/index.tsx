@@ -40,7 +40,7 @@ const options = {
 	},
 }
 
-const labels = ['10', '20', '30', '40', '50', '60', '70', '80']
+const labels = ['10', '20', '30', '40', '50', '60', '70']
 
 const LineGraph = () => {
 	const [myNumbers, setMyNumbers] = useState([
