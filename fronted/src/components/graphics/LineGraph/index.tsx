@@ -1,7 +1,7 @@
 import jsonData from './data.json'
 import { useRef } from 'react'
 import styles from './LineGraph.module.css'
-// import hammerjs from '~/src/hammerjs' // Удалите эту строку, так как вам не нужен hammerjs
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -112,7 +112,7 @@ const LineGraph = () => {
 	}
 
   // Создайте ссылку на элемент canvas
-  const canvasRef = useRef(null)
+  const canvasRef = useRef<Line>(null)
 
   // Добавьте обработчик события wheel, чтобы сбросить масштаб при нажатии Ctrl
   // Добавьте тип для параметра event
@@ -129,7 +129,7 @@ const LineGraph = () => {
 
 	return (
 		<div className={styles.main}>
-      // Отрисуйте три компонента Line с разными данными и добавьте ссылку и обработчик события на каждый
+
 			<Line ref={canvasRef} onWheel={handleWheel} options={options} data={data1} />
 			<Line ref={canvasRef} onWheel={handleWheel} options={options} data={data2} />
 			<Line ref={canvasRef} onWheel={handleWheel} options={options} data={data3} />
