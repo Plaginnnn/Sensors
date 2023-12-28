@@ -164,7 +164,7 @@ const LineGraph = () => {
   const canvasRef = useRef(null)
 
 	return (
-		<div className={styles.main} style={{maxHeight: '90vh'}}>
+		<div className={styles.main} style={{}}>
 		
      
 			<Line ref={canvasRef} options={options} data={data1} />
