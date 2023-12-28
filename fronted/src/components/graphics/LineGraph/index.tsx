@@ -28,93 +28,98 @@ ChartJS.register(
 )
 
 const options = {
-	responsive: true,
-	pointRadius:3,
-	
-	plugins: {
-		legend: {
-			position: 'top' as const,
-		},
-		title: {
-			display: true,
-			text: 'Графики температуры, влажности и угла',
-		},
-		zoom:{
-			pan:{
-				
-				
-				enabled: true, // Добавьте enabled: true для панорамирования
-        speed: 0.01, // Добавьте скорость для панорамирования
-        threshold: 10 // Добавьте порог для панорамирования
-			}
-		}
-	},
-	animation: {
-		duration: 0.5, // Уменьшите длительность анимации
-	},
-  // Добавьте опцию zoom, чтобы включить прокрутку по оси x
-  zoom: {
+  responsive: true,
+  pointRadius: 8,
+
+  plugins: {
+    legend: {
+      position: 'top' as const,
+    },
+    title: {
+      display: true,
+      text: 'Графики температуры, влажности и угла',
+    },
     zoom: {
-      wheel: {
-        enabled: true, // Включите прокрутку колесом мыши
-        speed: 0.1, // Добавьте скорость для прокрутки
-        threshold: 5 // Добавьте порог для прокрутки
+		pan: {
+			enabled: true,
+			speed: 0.01,
+			threshold: 10,
+		}, mode: 'y',
+      zoom: {
+        wheel: {
+          enabled: true,
+          speed: 0.1,
+          threshold: 5,
+        },
+       
       },
-      mode: 'xy' // Измените mode: 'y' на mode: 'x'
-    }
+    },
   },
-  // Добавьте опцию scales, чтобы настроить оси x и y
+  animation: {
+    duration: 0.5,
+  },
   scales: {
     x: {
-      // Добавьте метку для оси x
       title: {
         display: true,
-        text: 'Серверное время'
-      }
+        text: 'Серверное время',
+      },
     },
     y: {
-      // Добавьте метку для оси y
       title: {
         display: true,
-        text: 'Значение'
-      }
-    }
-  }
-}
+        text: 'Значение',
+		min: 0, // минимальное значение по оси Y
+		max: 30, // максимальное значение по оси Y
+		// остальные свойства
+      },
+    },
+  },
+};
 const labels = jsonData.map(item => item.server_time)
 
 const temperData = jsonData.map(item => item.info[0].temper)
 const humData = jsonData.map(item => item.info[0].hum)
 const angleData = jsonData.map(item => item.info[0].angle)
-// const examplejson = [
+// // const examplejson = [
 // 	{
-// 	  "server_date": "2023-21-12",
-// 	  "server_time": "10:41:19",
-// 	  "info": [{
-// 		"temper": 19.913733,
-// 		"hum": 26.306671,
-// 		"angle": 0.512457
-// 	  }]
-// 	},
-// 	{
-// 	  "server_date": "2023-22-12",
-// 	  "server_time": "10:43:19",
-// 	  "info": [{
-// 		"temper": 20.123456,
-// 		"hum": 27.456789,
-// 		"angle": 1.567890
-// 	  }]
-// 	},
-// 	{
-// 	  "server_date": "2023-23-12",
-// 	  "server_time": "10:45:19",
-// 	  "info": [{
-// 		"temper": 20.333333,
-// 		"hum": 28.571428,
-// 		"angle": 2.623758
-// 	  }]
-// 	}
-//   ]
+// 		"server_date": "2023-21-12",
+// 		"server_time": "10:41:19",
+// 		"info": [{
+// 		  "temper": 19.913733,
+// 		  "hum": 26.306671,
+// 		  "angle": 0.512457
+// 		}]
+// 	  },
+// 	  {
+// 		"server_date": "2023-22-12",
+// 		"server_time": "10:41:36",
+// 		"info": [{
+// 		  "temper": 20.123456,
+// 		  "hum": 27.456789,
+// 		  "angle": 1.567890
+// 		}]
+// 	  },
+// 	  {
+// 		"server_date": "2023-23-12",
+// 		"server_time":"10:41:49",
+// 		"info": [{
+// 		  "temper": 20.333333,
+// 		  "hum": 28.571428,
+// 		  "angle": 2.623758
+// 		}]
+// 	  },
+// 	  {
+// 		  "server_date": "2023-21-12",
+// 		  "server_time": "10:42:02",
+// 		  "info": [{
+// 			"temper": 19.913733,
+// 			"hum": 26.306671,
+// 			"angle": 0.512457
+// 		  }]
+// 		}
+// 	]
+	
   
 
 const LineGraph = () => {
@@ -159,8 +164,9 @@ const LineGraph = () => {
   const canvasRef = useRef(null)
 
 	return (
-		<div className={styles.main} style={{height: '90vh'}}>
-      // Отрисуйте три компонента Line с разными данными и добавьте ссылку и обработчик события на каждый
+		<div className={styles.main} style={{maxHeight: '90vh'}}>
+		
+     
 			<Line ref={canvasRef} options={options} data={data1} />
 			<Line ref={canvasRef}  options={options} data={data2} />
 			<Line ref={canvasRef} options={options} data={data3} />
