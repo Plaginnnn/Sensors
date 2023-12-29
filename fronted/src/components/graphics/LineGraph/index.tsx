@@ -1,5 +1,5 @@
-import jsonData from './data.json'
-import { useRef } from 'react'
+
+import { useEffect, useRef, useState } from 'react'
 import styles from './LineGraph.module.css'
 import {
 	Chart as ChartJS,
@@ -26,6 +26,7 @@ ChartJS.register(
 	Legend,
   zoomPlugin // Зарегистрируйте плагин
 )
+
 
 const options = {
   responsive: true,
@@ -76,53 +77,40 @@ const options = {
     },
   },
 };
-const labels = jsonData.map(item => item.server_time)
+// const labels = jsonData.map(item => item.server_time)
 
-const temperData = jsonData.map(item => item.info[0].temper)
-const humData = jsonData.map(item => item.info[0].hum)
-const angleData = jsonData.map(item => item.info[0].angle)
-// // const examplejson = [
-// 	{
-// 		"server_date": "2023-21-12",
-// 		"server_time": "10:41:19",
-// 		"info": [{
-// 		  "temper": 19.913733,
-// 		  "hum": 26.306671,
-// 		  "angle": 0.512457
-// 		}]
-// 	  },
-// 	  {
-// 		"server_date": "2023-22-12",
-// 		"server_time": "10:41:36",
-// 		"info": [{
-// 		  "temper": 20.123456,
-// 		  "hum": 27.456789,
-// 		  "angle": 1.567890
-// 		}]
-// 	  },
-// 	  {
-// 		"server_date": "2023-23-12",
-// 		"server_time":"10:41:49",
-// 		"info": [{
-// 		  "temper": 20.333333,
-// 		  "hum": 28.571428,
-// 		  "angle": 2.623758
-// 		}]
-// 	  },
-// 	  {
-// 		  "server_date": "2023-21-12",
-// 		  "server_time": "10:42:02",
-// 		  "info": [{
-// 			"temper": 19.913733,
-// 			"hum": 26.306671,
-// 			"angle": 0.512457
-// 		  }]
-// 		}
-// 	]
+// const temperData = jsonData.map(item => item.info[0].temper)
+// const humData = jsonData.map(item => item.info[0].hum)
+// const angleData = jsonData.map(item => item.info[0].angle)
+
+
+export const LineGraph = () => {
+
+
+const apiUrl = 'https://2d.su/view.php?egg_id=000D6F001477E0FE&start_date=2023-12-17&start_time=13:44:00&end_date=2023-12-18&end_time=20:45:00';
+
+const [labels, setLabels] = useState([]);
+const [temperData, setTemperData] = useState([]);
+const [humData, setHumData] = useState([]);
+const [angleData, setAngleData] = useState([]);
+
+
+// Обновляем состояния после получения данных с сервера
+useEffect(() => {
+  fetch(apiUrl)
+    .then(response => response.json())
+    .then(data => {
 	
-  
 
-const LineGraph = () => {
+		setLabels(data.map((item: { server_time: string }) => item.server_time));
+		setTemperData(data.map((item: { temp: string }) => Number(item.temp)));
+		setHumData(data.map((item: { humidity: string }) => Number(item.humidity)));
+		setAngleData(data.map((item: { angle: string }) => Number(item.angle)));
+
+    })
+    .catch(error => console.error('Ошибка при выполнении fetch запроса:', error));
+}, []);
+
 
 	const data1 = {
 		labels,
@@ -166,7 +154,7 @@ const LineGraph = () => {
 	return (
 		<div className={styles.main} style={{maxHeight: '100%'}}>
 		
-     
+		
 			<Line ref={canvasRef} options={options} data={data1} />
 			<Line ref={canvasRef}  options={options} data={data2} />
 			<Line ref={canvasRef} options={options} data={data3} />
