@@ -87,7 +87,7 @@ const options = {
 export const LineGraph = () => {
 
 
-const apiUrl = 'https://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2024-01-05&start_time=13:44:00&end_date=2024-01-09&end_time=20:45:00';
+const apiUrl = 'https://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2023-12-21&start_time=13:44:00&end_date=2023-12-21&end_time=15:45:00';
 
 const [labels, setLabels] = useState([]);
 const [temperData, setTemperData] = useState([]);
