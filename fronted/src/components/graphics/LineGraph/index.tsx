@@ -13,7 +13,8 @@ import {
 	Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import zoomPlugin from 'chartjs-plugin-zoom' // Импортируйте плагин
+import zoomPlugin from 'chartjs-plugin-zoom' 
+
 
 ChartJS.register(
 	CategoryScale,
@@ -24,7 +25,7 @@ ChartJS.register(
 	Tooltip,
 	Filler,
 	Legend,
-  zoomPlugin // Зарегистрируйте плагин
+  zoomPlugin
 )
 
 
@@ -87,7 +88,7 @@ const options = {
 export const LineGraph = () => {
 
 
-const apiUrl = 'http://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2023-12-21&start_time=13:44:00&end_date=2023-12-21&end_time=22:45:00';
+const apiUrl = 'https://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2023-12-21&start_time=13:44:00&end_date=2023-12-21&end_time=22:45:00';
 
 const [labels, setLabels] = useState([]);
 const [temperData, setTemperData] = useState([]);

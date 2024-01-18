@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-const apiUrl = 'http://eggs.2d.su/random.php';
+const apiUrl = 'https://eggs.2d.su/random.php';
 
 const options = {
   responsive: true,
