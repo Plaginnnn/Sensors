@@ -1,6 +1,8 @@
-
+// Импорт необходимых библиотек и стилей
 import { useEffect, useRef, useState } from 'react'
-import styles from './LineGraph.module.css'
+import mobileStyles from './LineGraphMobile.module.css';
+import styles from './LineGraph.module.css';
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -13,9 +15,9 @@ import {
 	Legend,
 } from 'chart.js'
 import { Line } from 'react-chartjs-2'
-import zoomPlugin from 'chartjs-plugin-zoom' 
+import zoomPlugin from 'chartjs-plugin-zoom'
 
-
+// Регистрация компонентов Chart.js и плагина зума
 ChartJS.register(
 	CategoryScale,
 	LinearScale,
@@ -28,17 +30,19 @@ ChartJS.register(
   zoomPlugin
 )
 
-
+// Настройки графика
 const options = {
   responsive: true,
-  pointRadius: 8,
+  pointRadius: 3,
 
   plugins: {
     legend: {
       position: 'top' as const,
+
     },
+	
     title: {
-      display: true,
+      display: false,
       text: 'Графики температуры, влажности и угла',
     },
     zoom: {
@@ -51,68 +55,67 @@ const options = {
         wheel: {
           enabled: true,
           speed: 0.1,
-          threshold: 5,
+          threshold: 10,
         },
        
       },
     },
   },
   animation: {
-    duration: 0.5,
+    duration: 1,
   },
+  
   scales: {
     x: {
       title: {
         display: true,
         text: 'Серверное время',
       },
+
+		
     },
     y: {
+		
       title: {
-        display: true,
-        text: 'Значение',
+        display: true ,
+        text: 'Показатели',
 		min: 0, // минимальное значение по оси Y
 		max: 30, // максимальное значение по оси Y
 		// остальные свойства
       },
+	
+		
     },
   },
 };
-// const labels = jsonData.map(item => item.server_time)
 
-// const temperData = jsonData.map(item => item.info[0].temper)
-// const humData = jsonData.map(item => item.info[0].hum)
-// const angleData = jsonData.map(item => item.info[0].angle)
-
-
+// Компонент LineGraph
 export const LineGraph = () => {
 
+  // URL для получения данных с сервера (в дальнейшем будем динамически менять используя option)
+  const apiUrl = 'https://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2023-12-21&start_time=13:44:00&end_date=2023-12-21&end_time=22:45:00';
 
-const apiUrl = 'https://eggs.2d.su/view.php?egg_id=000D6F0004CD6CE0&start_date=2023-12-21&start_time=13:44:00&end_date=2023-12-21&end_time=22:45:00';
+  // Состояния для хранения данных графика
+  const [labels, setLabels] = useState([]);
+  const [temperData, setTemperData] = useState([]);
+  const [humData, setHumData] = useState([]);
+  const [angleData, setAngleData] = useState([]);
 
-const [labels, setLabels] = useState([]);
-const [temperData, setTemperData] = useState([]);
-const [humData, setHumData] = useState([]);
-const [angleData, setAngleData] = useState([]);
+  // Запрос данных с сервера при монтировании компонента
+  useEffect(() => {
+    fetch(apiUrl)
+      .then(response => response.json())
+      .then(data => {
+        // Обновление состояний данными с сервера
+        setLabels(data.map((item: { server_time: string }) => item.server_time));
+        setTemperData(data.map((item: { temp: string }) => Number(item.temp)));
+        setHumData(data.map((item: { humidity: string }) => Number(item.humidity)));
+        setAngleData(data.map((item: { angle: string }) => Number(item.angle)));
+      })
+      .catch(error => console.error('Ошибка при выполнении fetch запроса:', error));
+  }, []);
 
-
-// Обновляем состояния после получения данных с сервера
-useEffect(() => {
-  fetch(apiUrl)
-    .then(response => response.json())
-    .then(data => {
-	
-
-		setLabels(data.map((item: { server_time: string }) => item.server_time));
-		setTemperData(data.map((item: { temp: string }) => Number(item.temp)));
-		setHumData(data.map((item: { humidity: string }) => Number(item.humidity)));
-		setAngleData(data.map((item: { angle: string }) => Number(item.angle)));
-
-    })
-    .catch(error => console.error('Ошибка при выполнении fetch запроса:', error));
-}, []);
-
-
+  // Конфигурация данных для графика температуры
 	const data1 = {
 		labels,
 		datasets: [
@@ -125,6 +128,8 @@ useEffect(() => {
 			},
 		],
 	}
+  
+  // Конфигурация данных для графика влажности
   const data2 = {
 		labels,
 		datasets: [
@@ -138,11 +143,12 @@ useEffect(() => {
 		],
 	}
 
+  // Конфигурация данных для графика угла
   const data3 = {
 		labels,
 		datasets: [
 			{
-				fill: true,
+				fill: true ,
 				label: 'Угол',
 				data: angleData,
 				borderColor: 'rgb(75, 192, 192)',
@@ -150,17 +156,31 @@ useEffect(() => {
 			},
 		],
 	}
-  const canvasRef = useRef(null)
+  
+  // Ссылка на элемент canvas для графика
+  const canvasRef1 = useRef(null);
+  const canvasRef2 = useRef(null);
+  const canvasRef3 = useRef(null);
 
-	return (
-		<div className={styles.main} style={{maxHeight: '100%'}}>
-		
-		
-			<Line ref={canvasRef} options={options} data={data1} />
-			<Line ref={canvasRef}  options={options} data={data2} />
-			<Line ref={canvasRef} options={options} data={data3} />
-		</div>
-	)
+  // Рендеринг компонента
+	
+			return (
+				<div className={`${styles.main} ${mobileStyles.mobileMain}`} style={{ maxHeight: '100%' }}>
+				
+				<div className={mobileStyles.mobileChart}>
+					<Line ref={canvasRef1} options={options} data={data1} />
+				</div>
+				<div className={mobileStyles.mobileChart}>
+					<Line ref={canvasRef2} options={options} data={data2} />
+				</div>
+				<div className={mobileStyles.mobileChart}>
+					<Line ref={canvasRef3} options={options} data={data3} />
+				</div>
+				</div>
+			);
+  
+  
 }
 
+// Экспорт компонента
 export default LineGraph
