@@ -33,7 +33,7 @@ ChartJS.register(
 // Настройки графика
 const options = {
   responsive: true,
-  pointRadius: 3,
+  pointRadius: 5,
 
   plugins: {
     legend: {
@@ -62,7 +62,7 @@ const options = {
     },
   },
   animation: {
-    duration: 1,
+    duration: 0,
   },
   
   scales: {

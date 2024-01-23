@@ -37,6 +37,7 @@ const options = {
   scales: {
     x: {
       title: {
+        
         display: true,
         text: 'Серверное время',
       },

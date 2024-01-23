@@ -1,12 +1,23 @@
-import './App.css'
-import LineGraph from './components/graphics/LineGraph'
-import LineRealTime from './components/graphics/RealTime/LineRealTime'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';  // Импортируем BrowserRouter, Route и Switch
+import './App.css';
+import Header from './components/Header';
+import LineGraph from './components/graphics/LineGraph';
+import LineRealTime from './components/graphics/RealTime/LineRealTime';
+
 export const App = () => {
-	return (
+  return (
+	<Router>
+	<div>
+		<Header />
 		<div className='wrapper'>
-			<LineRealTime/>
-			<LineGraph />
+		<Routes>
+			<Route path="/" element ={<LineRealTime/>} />
+			<Route path="/interval" element ={<LineGraph/>}/>
+		</Routes>
 		</div>
-	)
-}
-export default App
+	</div>
+	</Router>
+  );
+};
+
+export default App;
