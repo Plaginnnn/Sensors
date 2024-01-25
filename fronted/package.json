@@ -10,11 +10,16 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"@emotion/react": "^11.11.3",
+		"@emotion/styled": "^11.11.0",
+		"@mui/material": "^5.15.6",
+		"@mui/x-date-pickers": "^6.19.0",
 		"@syncfusion/ej2-react-charts": "^24.1.43",
 		"chart.js": "^4.4.0",
 		"chartjs-adapter-date-fns": "^3.0.0",
 		"chartjs-plugin-zoom": "^2.0.1",
 		"date-fns": "^3.0.6",
+		"dayjs": "^1.11.10",
 		"faker": "^6.6.6",
 		"react": "^18.2.0",
 		"react-chartjs-2": "^5.2.0",

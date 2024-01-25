@@ -1,6 +1,10 @@
 body {
-	background-color: rgb(36, 36, 36);
+	background-color: rgb(0, 0, 0);
 }
-.wrapper {
-	padding: 50px;
-}
+@media (min-width: 620px) {
+	.wrapper {
+	  padding: 50px;
+	}
+  }
+  
+  /* For devices with width 620px and above */

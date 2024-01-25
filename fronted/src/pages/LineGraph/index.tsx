@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react'
 import mobileStyles from './LineGraphMobile.module.css';
 import styles from './LineGraph.module.css';
 
+
 import {
 	Chart as ChartJS,
 	CategoryScale,
@@ -30,10 +31,24 @@ ChartJS.register(
   zoomPlugin
 )
 
+
+const getAspectRatio = () => {
+	// Adjust the width breakpoint as needed
+	const breakpoint = 620;
+	const settings = {
+		width: window.innerWidth < breakpoint ? 1 : 2,
+		point :window.innerWidth < breakpoint ? 0 : 5,
+		display:window.innerWidth < breakpoint ? false : true,
+		
+	}
+	return settings
+  };
 // Настройки графика
 const options = {
   responsive: true,
-  pointRadius: 5,
+  
+  pointRadius: getAspectRatio().point,
+  aspectRatio: getAspectRatio().width,
 
   plugins: {
     legend: {
@@ -47,7 +62,7 @@ const options = {
     },
     zoom: {
 		pan: {
-			enabled: true,
+			enabled: true ,
 			speed: 0.01,
 			threshold: 10,
 		}, mode: 'y',
@@ -55,14 +70,19 @@ const options = {
         wheel: {
           enabled: true,
           speed: 0.1,
-          threshold: 10,
+		threshold: 0.1,
+
         },
-       
+		
+		limits: {
+			y: { min: 0, max: 30 },
+		}
       },
     },
   },
   animation: {
     duration: 0,
+	enabled: false,
   },
   
   scales: {
@@ -77,13 +97,13 @@ const options = {
     y: {
 		
       title: {
-        display: true ,
-        text: 'Показатели',
+        display: getAspectRatio().display, 
+		text: "Значение",
 		min: 0, // минимальное значение по оси Y
 		max: 30, // максимальное значение по оси Y
 		// остальные свойства
+		
       },
-	
 		
     },
   },

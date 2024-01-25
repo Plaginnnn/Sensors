@@ -1,11 +1,25 @@
 import { useEffect, useState } from 'react';
 import { Line } from 'react-chartjs-2';
 
-const apiUrl = 'https://eggs.2d.su/random.php';
+const apiUrl = 'https://eggs.2d.su/egg_last_info.php?egg_id=000D6F0004CD6CE0';
 
+const getAspectRatio = () => {
+	// Adjust the width breakpoint as needed
+	const breakpoint = 620;
+	const settings = {
+		width: window.innerWidth < breakpoint ? 1 : 2,
+		point :window.innerWidth < breakpoint ? 0 : 5,
+		display:window.innerWidth < breakpoint ? false : true,
+		
+	}
+	return settings
+  };
+// Настройки графика
 const options = {
   responsive: true,
-  pointRadius: 8,
+  
+  pointRadius: getAspectRatio().point,
+  aspectRatio: getAspectRatio().width,
 
   plugins: {
     legend: {
@@ -17,13 +31,13 @@ const options = {
     },
     zoom: {
 		pan: {
-			enabled: true,
+			enabled: false,
 			speed: 0.01,
 			threshold: 10,
 		}, mode: 'y',
       zoom: {
         wheel: {
-          enabled: true,
+          enabled: false,
           speed: 0.1,
           threshold: 5,
         },
@@ -31,8 +45,10 @@ const options = {
       },
     },
   },
+  
   animation: {
-    duration: 0.5,
+    duration: 1,
+    enabled: false,
   },
   scales: {
     x: {
@@ -44,10 +60,11 @@ const options = {
     },
     y: {
       title: {
-        display: true,
+        display: getAspectRatio().display, 
+
         text: 'Значение',
 		min: 0, // минимальное значение по оси Y
-		max: 30, // максимальное значение по оси Y
+		max: 3, // максимальное значение по оси Y
 		// остальные свойства
       },
     },
@@ -65,19 +82,19 @@ const LineRealTime = () => {
       .then((response) => response.json())
       .then((data) => {
         // Добавляем новые данные
-        setLabels((prevLabels) => [...prevLabels.slice(-49), data.time]);
-        setTemperData((prevTemperData) => [...prevTemperData.slice(-49), Number(data.temp)]);
-        setHumData((prevHumData) => [...prevHumData.slice(-49), Number(data.humidity)]);
-        setAngleData((prevAngleData) => [...prevAngleData.slice(-49), Number(data.angle)]);
+        setLabels((prevLabels) => [...prevLabels.slice(-10), data.server_time]);
+        setTemperData((prevTemperData) => [...prevTemperData.slice(-10), Number(data.temp)]);
+        setHumData((prevHumData) => [...prevHumData.slice(-10), Number(data.humidity)]);
+        setAngleData((prevAngleData) => [...prevAngleData.slice(-10), Number(data.angle)]);
       })
       .catch((error) => console.error('Ошибка при выполнении fetch запроса:', error));
   };
 
   useEffect(() => {
-    fetchData(); // Fetch data initially
+    fetchData(); 
 
-    // Set up interval to fetch data every 10 seconds
-    const intervalId = setInterval(fetchData, 1000);
+    // Интервал фетч запроса
+    const intervalId = setInterval(fetchData, 14000);
 
     // Clean up interval on component unmount
     return () => clearInterval(intervalId);
