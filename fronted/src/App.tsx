@@ -3,7 +3,7 @@ import './App.css';
 import Header from './components/Header';
 import LineGraph from './pages/LineGraph';
 import LineRealTime from './pages/RealTime/LineRealTime';
-import Settings from './pages/Settings'
+// import Settings from './pages/Settings'
 
 export const App = () => {
   return (
