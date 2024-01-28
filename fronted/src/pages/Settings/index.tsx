@@ -6,9 +6,14 @@
 // import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 // import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 // import { DateCalendar, StaticTimePicker } from '@mui/x-date-pickers';
+
 // import { Dayjs } from 'dayjs';
 // import 'dayjs/locale/en'; // Import the locale you need
 // const today = dayjs();
+
+
+// const today = dayjs();
+// const twoPM = dayjs().set('hour', 14).startOf('hour');
 
 
 // const darkTheme = createTheme({
@@ -26,6 +31,7 @@
 // export default function Settings() {
 //   const [selectedDateTime, setSelectedDateTime] = useState(today);
 
+
 //   const handleDateTimeChange = (value: Dayjs | null) => {
 //     // Your logic here
 //     if (value !== null) {
@@ -34,6 +40,14 @@
 //       alert(updatedDateTime);
 //     }
 //   };
+
+//   const handleDateTimeChange = (dateTime) => {
+//     // Add 3 hours to the selected time
+//     const updatedDateTime = dateTime.add(3, 'hour');
+//     setSelectedDateTime(updatedDateTime);
+//     alert(updatedDateTime);
+//   };
+
 //   return (
 //     <div className='main-settings'>
 //       <ThemeProvider theme={darkTheme}>

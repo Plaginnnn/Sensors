@@ -14,7 +14,11 @@ export const App = () => {
 		<Routes>
 			<Route path="/" element ={<LineRealTime/>} />
 			<Route path="/interval" element ={<LineGraph/>}/>
+
 			{/* <Route path="/settings" element ={<Settings/>}/> */}
+
+{/* 			<Route path="/settings" element ={<Settings/>}/> */}
+
 		</Routes>
 		</div>
 	</div>
