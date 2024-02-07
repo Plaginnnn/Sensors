@@ -45,69 +45,63 @@ const getAspectRatio = () => {
   };
 // Настройки графика
 const options = {
-  responsive: true,
-  
-  pointRadius: getAspectRatio().point,
-  aspectRatio: getAspectRatio().width,
+	responsive: true,
+	pointRadius: getAspectRatio().point,
+	aspectRatio: getAspectRatio().width,
+	plugins: {
+		legend: {
+			position: 'top' as const,
+		},
+		title: {
+			display: false,
+			text: 'Графики температуры, влажности и угла',
+		},
+		zoom: {
+			pan: {
+				enabled: true,
+				speed: 0.01,
+				threshold: 10,
+			},
+			zoom: {
+				wheel: {
+					enabled: true,
+					speed: 0.1,
+					threshold: 0.1,
+				},
+				pinch: {
+					enabled: true, // Включение масштабирования жестом пальцев
+				},
+				drag: {
+					enabled: true, // Включение перетаскивания на мобильных устройствах
+				},
+				limits: {
+					y: { min: 0, max: 30 },
+				},
+			},
+		},
+	},
+	animation: {
+		duration: 0,
+		enabled: false,
+	},
+	scales: {
+		x: {
+			title: {
+				display: true,
+				text: 'Серверное время',
+			},
+		},
+		y: {
+			title: {
+				display: getAspectRatio().display,
+				text: 'Значение',
+				min: 0, // минимальное значение по оси Y
+				max: 30, // максимальное значение по оси Y
+			},
+		},
+	},
+}
 
-  plugins: {
-    legend: {
-      position: 'top' as const,
-
-    },
-	
-    title: {
-      display: false,
-      text: 'Графики температуры, влажности и угла',
-    },
-    zoom: {
-		pan: {
-			enabled: true ,
-			speed: 0.01,
-			threshold: 10,
-		}, mode: 'y',
-      zoom: {
-        wheel: {
-          enabled: true,
-          speed: 0.1,
-		threshold: 0.1,
-
-        },
-		
-		limits: {
-			y: { min: 0, max: 30 },
-		}
-      },
-    },
-  },
-  animation: {
-    duration: 0,
-	enabled: false,
-  },
-  
-  scales: {
-    x: {
-      title: {
-        display: true,
-        text: 'Серверное время',
-      },
-
-		
-    },
-    y: {
-		
-      title: {
-        display: getAspectRatio().display, 
-		text: "Значение",
-		min: 0, // минимальное значение по оси Y
-		max: 30, // максимальное значение по оси Y
-		// остальные свойства
-		
-      },
-		
-    },
-  },
-};
 
 // Компонент LineGraph
 export const LineGraph = () => {
